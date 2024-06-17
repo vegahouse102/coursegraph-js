@@ -271,11 +271,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
         document.getElementById('saveAsPngBtn').addEventListener('click', function () {
-            html2canvas(document.querySelector("#subjectChart")).then(canvas => {
+            html2canvas(document.querySelector("#subjectChart"), {
+                allowTaint: true,
+                useCORS: true,
+                logging: true,
+                backgroundColor: null // 투명 배경을 유지
+            }).then(canvas => {
                 const link = document.createElement('a');
                 link.download = 'subject-chart.png';
                 link.href = canvas.toDataURL("image/png");
                 link.click();
+            }).catch(error => {
+                console.error('Error capturing the chart:', error);
             });
         });
 
@@ -353,6 +360,17 @@
                 }
             });
         });
+
+        document.getElementById('SearchBtn').addEventListener('click', () => {
+            const searchText = document.getElementById('SearchTxt').value.trim();
+            if (searchText.length < 1) {
+                alert('1글자 이상 입력해주세요');
+            } else {
+                // 검색 기능 수행
+                console.log('Searching for:', searchText);
+            }
+        });
+
     </script>
 
 </body>
