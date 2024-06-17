@@ -33,9 +33,6 @@
     <button id="enableAllBtn">모든 과목 활성화</button>
     <button id="darkModeBtn">다크 모드</button> <!-- 다크 모드 버튼 추가 -->
 
-    <button id="disableAllBtn">모든 과목 비활성화</button>
-    <button id="enableAllBtn">모든 과목 활성화</button>
-
     <br /><br />
     <div id="searchContainer">
         <input type="text" id="SearchTxt" placeholder="Search...">
@@ -49,10 +46,6 @@
         <button onclick="filterCourses('2학년')">2학년</button>
         <button onclick="filterCourses('3학년')">3학년</button>
         <button onclick="filterCourses('4학년')">4학년</button>
-        <button onclick="scrollToSection('1학년')">1학년</button>
-        <button onclick="scrollToSection('2학년')">2학년</button>
-        <button onclick="scrollToSection('3학년')">3학년</button>
-        <button onclick="scrollToSection('4학년')">4학년</button>
     </div>
 
     <pre id="subjectChart" class="mermaid">
@@ -360,11 +353,6 @@
                 }
             });
         });
-
- main
-        function scrollToSection(sectionId) {
-            const section = document.getElementById(sectionId);
-        }
     </script>
 
 </body>
