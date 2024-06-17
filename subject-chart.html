@@ -33,26 +33,20 @@
     <button id="enableAllBtn">모든 과목 활성화</button>
     <button id="darkModeBtn">다크 모드</button> <!-- 다크 모드 버튼 추가 -->
 
-    <button id="disableAllBtn">모든 과목 비활성화</button>
-    <button id="enableAllBtn">모든 과목 활성화</button>
-
     <br /><br />
     <div id="searchContainer">
         <input type="text" id="SearchTxt" placeholder="Search...">
         <input type="button" id="SearchBtn" value="Search">
     </div>
-    <div id="basicMajor">전공기초(필수)</div>
-    <div id="majorSelection">공통권장과목</div>
+    <div id="basicMajor" style="color: black;">전공기초(필수)</div>
+    <div id="majorSelection" style="color: black;">공통권장과목</div>
 
     <div id="navigation">
         <button onclick="filterCourses('1학년')">1학년</button>
         <button onclick="filterCourses('2학년')">2학년</button>
         <button onclick="filterCourses('3학년')">3학년</button>
         <button onclick="filterCourses('4학년')">4학년</button>
-        <button onclick="scrollToSection('1학년')">1학년</button>
-        <button onclick="scrollToSection('2학년')">2학년</button>
-        <button onclick="scrollToSection('3학년')">3학년</button>
-        <button onclick="scrollToSection('4학년')">4학년</button>
+        <button id="reset-button">Reset Page</button>
     </div>
 
     <pre id="subjectChart" class="mermaid">
@@ -278,11 +272,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
         document.getElementById('saveAsPngBtn').addEventListener('click', function () {
-            html2canvas(document.querySelector("#subjectChart")).then(canvas => {
+            html2canvas(document.querySelector("#subjectChart"), {
+                allowTaint: true,
+                useCORS: true,
+                logging: true,
+                backgroundColor: null // 투명 배경을 유지
+            }).then(canvas => {
                 const link = document.createElement('a');
                 link.download = 'subject-chart.png';
                 link.href = canvas.toDataURL("image/png");
                 link.click();
+            }).catch(error => {
+                console.error('Error capturing the chart:', error);
             });
         });
 
@@ -361,10 +362,24 @@
             });
         });
 
- main
-        function scrollToSection(sectionId) {
-            const section = document.getElementById(sectionId);
-        }
+        document.getElementById('SearchBtn').addEventListener('click', () => {
+            const searchText = document.getElementById('SearchTxt').value.trim();
+            if (searchText.length < 1) {
+                alert('1글자 이상 입력해주세요');
+            } else {
+                const allNodes = document.querySelectorAll('.node');
+                allNodes.forEach(node => {
+                    const nodeId = node.getAttribute('data-id');
+                    if (nodeId.includes(searchText) && !nodeId.includes('dummynode')) {
+                        node.classList.remove('transparent');
+                    } else {
+                        node.classList.add('transparent');
+                    }
+                });
+            }
+        });
+                // 검색 기능 수행
+                console.log('Searching for:', searchText);
     </script>
 
 </body>
