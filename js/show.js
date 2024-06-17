@@ -1,6 +1,12 @@
 function drawSVGGraph(courses) {
   const width = 2000;
   const height = 2000;
+  const svgs= document.querySelector('svg');
+  
+  // 모든 자식 요소를 제거합니다.
+  while (svgs.firstChild) {
+    svgs.removeChild(svgs.firstChild);
+  }
   const svg = d3.select('svg').attr('width', width).attr('height', height);
 
   // 학년, 학기별 그룹화
@@ -72,6 +78,30 @@ function drawSVGGraph(courses) {
     .attr('y2', (d) => d.target.y) // 노드의 위에서 끝
     .attr('marker-end', 'url(#arrow)');
 
+ // 선 그리기
+  svg.selectAll('.link')
+    .data(links)
+    .enter()
+    .append('line')
+    .attr('class', 'link')
+    .attr('x1', d => d.source.x)
+    .attr('y1', d => d.source.y)
+    .attr('x2', d => d.target.x)
+    .attr('y2', d => d.target.y)
+    .attr('data-track', d => d.target.트랙 || '')
+    .on('mouseover', function(event, d) {
+      if (d.target.트랙) {
+        svg.append('text')
+          .attr('x', (d.source.x + d.target.x) / 2)
+          .attr('y', (d.source.y + d.target.y) / 2)
+          .text(d.target.트랙)
+          .attr('class', 'track-name-tooltip');
+      }
+    })
+    .on('mouseout', function() {
+      svg.select('.track-name-tooltip').remove();
+    });
+  
   // 노드 그리기
   const node = svg
     .selectAll('.node')
