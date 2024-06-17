@@ -33,8 +33,6 @@
     <button id="enableAllBtn">모든 과목 활성화</button>
     <button id="darkModeBtn">다크 모드</button> <!-- 다크 모드 버튼 추가 -->
 
-    <button id="disableAllBtn">모든 과목 비활성화</button>
-    <button id="enableAllBtn">모든 과목 활성화</button>
 
     <br /><br />
     <div id="searchContainer">
@@ -384,6 +382,11 @@
                 });
             }
         });
+                // 검색 기능 수행
+                console.log('Searching for:', searchText);
+            }
+        });
+
         function scrollToSection(sectionId) {
             const section = document.getElementById(sectionId);
         }
